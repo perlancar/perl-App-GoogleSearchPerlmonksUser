@@ -40,12 +40,19 @@ sub google_search_perlmonks_user {
         " ",
         "site:perlmonks.org",
         $user,
-        qq(-"node $user"), # skip node page
         qq(-inurl:/bare), # skip bare pages
-        qq(-intitle:"$user's scratchpad"), # skip scratchpad
-        qq(-inurl:"displaytype=print"), # skip print version of pages
-        qq(-inurl:"displaytype=xml"), # skip xml version of pages
+        qq(-intitle:"$user\'s scratchpad"), # skip scratchpad
+
+        # skip some versions of pages
+        qq(-inurl:"displaytype=print"),
+        qq(-inurl:"displaytype=xml"),
+        qq(-inurl:"displaytype=edithistory"),
+
         qq(-intitle:"Perl Monks User Search"), # skip search result page
+
+        # TODO: how to exclude "Other Users" box? it would be nice if
+        # perlmonks.org marks some sections to be excluded by google, ref:
+        # http://www.perlmonks.org/?node_id=1136864
     );
 
     my $url = "https://www.google.com/search?num=100&q=".
